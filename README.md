@@ -50,3 +50,48 @@ We implemented and compared multiple forecasting approaches:
 git clone https://github.com/<your-username>/ev-growth-project.git
 cd ev-growth-project
 
+2️⃣ Create a Virtual Environment
+python -m venv venv
+source venv/bin/activate   # On Mac/Linux
+venv\Scripts\activate      # On Windows
+
+3️⃣ Install Dependencies
+pip install -r requirements.txt
+
+4️⃣ Run the Streamlit Dashboard
+streamlit run src/app.py
+
+
+Then open your browser at http://localhost:8501 to explore the dashboard.
+
+🌐 Deployment
+
+This project is ready for deployment on Streamlit Cloud:
+
+Push your repository to GitHub.
+
+Go to Streamlit Cloud
+.
+
+Select your repo and src/app.py as the entry file.
+
+Deploy and share your live dashboard link.
+
+📄 Results
+Model	MAE	RMSE	MAPE (%)	Remarks
+ARIMA	1683.6	1683.6	35.9	Univariate baseline
+ARIMAX	0.55	0.55	0.24	Uses exogenous input
+Prophet	1053.2	1198.3	32.1	Captures seasonality
+VAR	890.2	1045.6	29.8	Multivariate predictors
+XGBoost	877.0	1090.0	349.1	Nonlinear regression
+📘 References
+
+U.S. Department of Energy, Alternative Fuels Data Center.
+
+T. Chen and C. Guestrin, “XGBoost: A Scalable Tree Boosting System,” Proc. ACM SIGKDD, 2016.
+
+R.J. Hyndman and G. Athanasopoulos, Forecasting: Principles and Practice, 2021.
+
+S.M. Lundberg and S.-I. Lee, “A Unified Approach to Interpreting Model Predictions,” NeurIPS, 2017.
+
+Statsmodels Developers, Statistical Modeling and Econometrics in Python, 2024.
