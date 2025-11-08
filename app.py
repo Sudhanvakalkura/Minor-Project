@@ -183,18 +183,32 @@ with c2:
 with c3:
     safe_img_display(SHAP_BAR, caption="SHAP bar plot")
 
+
 # ---------------- Granger causality ----------------
 st.markdown("### 🔎 Granger Causality (p-values)")
+st.write("""
+The Granger causality test helps determine whether one time series 
+(e.g., fuel price or charging stations) **predicts** EV registrations.
+Lower p-values (< 0.05) suggest significant predictive influence.
+""")
+
 if granger_df is not None:
-    # Expecting columns like ['variable', 'lag', 'p_value']
     try:
         display_df = granger_df.copy()
-        # Nicely format p-values
         if 'p_value' in display_df.columns:
             display_df['p_value'] = display_df['p_value'].apply(lambda x: f"{float(x):.4f}")
         st.table(display_df)
-    except Exception:
+
+        # --- Show Granger Heatmap (if available) ---
+        granger_heatmap = BASE_DIR / "reports" / "figs" / "granger_heatmap.png"
+        if granger_heatmap.exists():
+            st.image(str(granger_heatmap), caption="Granger Causality Heatmap", use_container_width=True)
+        else:
+            st.info("Heatmap not found. Run `granger_plot.py` to generate visualization.")
+    except Exception as e:
+        st.warning(f"Error displaying Granger results: {e}")
         st.write(granger_df)
+
 else:
     st.info("No persisted Granger results found. Click 'Run Granger' in the sidebar to compute.")
     if st.button("Run Granger tests now"):
